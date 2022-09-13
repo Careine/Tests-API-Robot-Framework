@@ -1,33 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 5.0.1 (Python 3.10.4 on linux)" generated="20220909 18:11:26.989" rpa="false" schemaversion="3">
+<robot generator="Robot 5.0.1 (Python 3.10.4 on linux)" generated="20220913 12:29:45.749" rpa="false" schemaversion="3">
 <suite id="s1" name="Tests" source="/home/dmd-pc-testeur/VSCode Projects/mon_API/Tests">
 <suite id="s1-s1" name="Api" source="/home/dmd-pc-testeur/VSCode Projects/mon_API/Tests/api.robot">
 <test id="s1-s1-t1" name="Inscrire un utilisateur dans la BD" line="6">
 <kw name="Vérifier l'existance de l'utilisateur dans la base de données" library="singupBack">
-<kw name="Connect To Database Using Custom Params">
+<kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
 <arg>pymysql</arg>
 <arg>database='demo', user='root', password='', host='localhost'</arg>
-<msg timestamp="20220909 18:11:27.004" level="FAIL">No keyword with name 'Connect To Database Using Custom Params' found.</msg>
-<status status="FAIL" starttime="20220909 18:11:27.004" endtime="20220909 18:11:27.004"/>
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_custom_param_string`.</doc>
+<msg timestamp="20220913 12:29:45.858" level="INFO">Executing : Connect To Database Using Custom Params : pymysql.connect(db_api_2.connect(database='demo', user='root', password='', host='localhost')) </msg>
+<status status="PASS" starttime="20220913 12:29:45.857" endtime="20220913 12:29:45.858"/>
 </kw>
-<kw name="Row Count Is 0">
+<kw name="Row Count Is 0" library="DatabaseLibrary">
 <arg>SELECT `id` FROM `users` WHERE `username` = ${USERNAME} AND `password` = md5(${PASSWORD})</arg>
-<status status="NOT RUN" starttime="20220909 18:11:27.004" endtime="20220909 18:11:27.004"/>
+<doc>Check if any rows are returned from the submitted `selectStatement`. If there are, then this will throw an
+AssertionError. Set optional input `sansTran` to True to run command without an explicit transaction commit or
+rollback.</doc>
+<msg timestamp="20220913 12:29:45.859" level="INFO">Executing : Row Count Is 0  |  SELECT `id` FROM `users` WHERE `username` = 'Caro' AND `password` = md5('test') </msg>
+<msg timestamp="20220913 12:29:45.859" level="INFO">Executing : Row Count  |  SELECT `id` FROM `users` WHERE `username` = 'Caro' AND `password` = md5('test') </msg>
+<status status="PASS" starttime="20220913 12:29:45.859" endtime="20220913 12:29:45.859"/>
 </kw>
-<status status="FAIL" starttime="20220909 18:11:27.003" endtime="20220909 18:11:27.005"/>
+<status status="PASS" starttime="20220913 12:29:45.857" endtime="20220913 12:29:45.859"/>
 </kw>
 <kw name="Inscription utilisateur par une requête Http POST" library="singupBack">
-<status status="NOT RUN" starttime="20220909 18:11:27.005" endtime="20220909 18:11:27.005"/>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>session1</arg>
+<arg>${WEBSITE_LINK}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220913 12:29:45.860" level="INFO">Creating Session using : alias=session1, url=http://localhost/demo/api/user/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220913 12:29:45.860" endtime="20220913 12:29:45.860"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${data}</var>
+<arg>username=${USERNAME1}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220913 12:29:45.860" level="INFO">${data} = {'username': "'Rosine'", 'password': "'test'"}</msg>
+<status status="PASS" starttime="20220913 12:29:45.860" endtime="20220913 12:29:45.860"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>content=Type=application/x-www-form-unlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220913 12:29:45.860" level="INFO">${headers} = {'content': 'Type=application/x-www-form-unlencoded'}</msg>
+<status status="PASS" starttime="20220913 12:29:45.860" endtime="20220913 12:29:45.860"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>session1</arg>
+<arg>signup.php</arg>
+<arg>data=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220913 12:29:45.864" level="INFO">POST Request : url=http://localhost/demo/api/user/signup.php 
+ path_url=/demo/api/user/signup.php 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'content': 'Type=application/x-www-form-unlencoded', 'Content-Length': '41', 'Content-Type': 'application/x-www-form-urlencoded'} 
+ body=username=%27Rosine%27&amp;password=%27test%27 
+ </msg>
+<msg timestamp="20220913 12:29:45.864" level="INFO">POST Response : url=http://localhost/demo/api/user/signup.php 
+ status=500, reason=Internal Server Error 
+ headers={'Date': 'Tue, 13 Sep 2022 11:29:45 GMT', 'Server': 'Apache/2.4.53 (Unix) OpenSSL/1.1.1o PHP/8.1.6 mod_perl/2.0.12 Perl/v5.34.1', 'X-Powered-By': 'PHP/8.1.6', 'Content-Length': '0', 'Connection': 'close', 'Content-Type': 'text/html; charset=UTF-8'} 
+ body=None 
+ </msg>
+<msg timestamp="20220913 12:29:45.864" level="FAIL">HTTPError: 500 Server Error: Internal Server Error for url: http://localhost/demo/api/user/signup.php</msg>
+<status status="FAIL" starttime="20220913 12:29:45.860" endtime="20220913 12:29:45.864"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20220913 12:29:45.865" endtime="20220913 12:29:45.865"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220913 12:29:45.865" endtime="20220913 12:29:45.865"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${json.status}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20220913 12:29:45.865" endtime="20220913 12:29:45.865"/>
+</kw>
+<status status="FAIL" starttime="20220913 12:29:45.859" endtime="20220913 12:29:45.865"/>
 </kw>
 <kw name="Vérifier que l'utilisateur est ajoute dans la BD" library="singupBack">
-<status status="NOT RUN" starttime="20220909 18:11:27.005" endtime="20220909 18:11:27.005"/>
+<status status="NOT RUN" starttime="20220913 12:29:45.866" endtime="20220913 12:29:45.866"/>
 </kw>
 <tag>First</tag>
-<status status="FAIL" starttime="20220909 18:11:27.002" endtime="20220909 18:11:27.005">No keyword with name 'Connect To Database Using Custom Params' found.</status>
+<status status="FAIL" starttime="20220913 12:29:45.857" endtime="20220913 12:29:45.866">HTTPError: 500 Server Error: Internal Server Error for url: http://localhost/demo/api/user/signup.php</status>
 </test>
-<status status="FAIL" starttime="20220909 18:11:26.999" endtime="20220909 18:11:27.005"/>
+<status status="FAIL" starttime="20220913 12:29:45.758" endtime="20220913 12:29:45.866"/>
 </suite>
-<status status="FAIL" starttime="20220909 18:11:26.990" endtime="20220909 18:11:27.006"/>
+<status status="FAIL" starttime="20220913 12:29:45.749" endtime="20220913 12:29:45.867"/>
 </suite>
 <statistics>
 <total>
@@ -42,45 +108,5 @@
 </suite>
 </statistics>
 <errors>
-<msg timestamp="20220909 18:11:27.001" level="ERROR">Error in file '/home/dmd-pc-testeur/VSCode Projects/mon_API/Ressources/singupBack.robot' on line 2: Importing library 'SeleniumLibrary' failed: ModuleNotFoundError: No module named 'SeleniumLibrary'
-Traceback (most recent call last):
-  None
-PYTHONPATH:
-  /usr/local/bin
-  /usr/lib/python310.zip
-  /usr/lib/python3.10
-  /usr/lib/python3.10/lib-dynload
-  /usr/local/lib/python3.10/dist-packages
-  /usr/lib/python3/dist-packages</msg>
-<msg timestamp="20220909 18:11:27.001" level="ERROR">Error in file '/home/dmd-pc-testeur/VSCode Projects/mon_API/Ressources/singupBack.robot' on line 3: Importing library 'RequestsLibrary' failed: ModuleNotFoundError: No module named 'RequestsLibrary'
-Traceback (most recent call last):
-  None
-PYTHONPATH:
-  /usr/local/bin
-  /usr/lib/python310.zip
-  /usr/lib/python3.10
-  /usr/lib/python3.10/lib-dynload
-  /usr/local/lib/python3.10/dist-packages
-  /usr/lib/python3/dist-packages</msg>
-<msg timestamp="20220909 18:11:27.001" level="ERROR">Error in file '/home/dmd-pc-testeur/VSCode Projects/mon_API/Ressources/singupBack.robot' on line 4: Importing library 'DatabaseLibrary' failed: ModuleNotFoundError: No module named 'DatabaseLibrary'
-Traceback (most recent call last):
-  None
-PYTHONPATH:
-  /usr/local/bin
-  /usr/lib/python310.zip
-  /usr/lib/python3.10
-  /usr/lib/python3.10/lib-dynload
-  /usr/local/lib/python3.10/dist-packages
-  /usr/lib/python3/dist-packages</msg>
-<msg timestamp="20220909 18:11:27.002" level="ERROR">Error in file '/home/dmd-pc-testeur/VSCode Projects/mon_API/Ressources/singupBack.robot' on line 6: Importing library 'pymysql' failed: ModuleNotFoundError: No module named 'pymysql'
-Traceback (most recent call last):
-  None
-PYTHONPATH:
-  /usr/local/bin
-  /usr/lib/python310.zip
-  /usr/lib/python3.10
-  /usr/lib/python3.10/lib-dynload
-  /usr/local/lib/python3.10/dist-packages
-  /usr/lib/python3/dist-packages</msg>
 </errors>
 </robot>
