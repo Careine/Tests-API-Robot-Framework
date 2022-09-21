@@ -8,6 +8,8 @@ robotframework-seleniumlibrary = "*"
 robotframework = "*"
 robotframework-databaselibrary = "*"
 robotframework-requests = "*"
+robotframework-jsonlibrary = "*"
+pymysql = "*"
 
 [dev-packages]
 

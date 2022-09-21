@@ -1,110 +1,418 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 5.0.1 (Python 3.10.4 on linux)" generated="20220913 12:29:45.749" rpa="false" schemaversion="3">
+<robot generator="Robot 5.0.1 (Python 3.10.4 on linux)" generated="20220921 09:56:42.400" rpa="false" schemaversion="3">
 <suite id="s1" name="Tests" source="/home/dmd-pc-testeur/VSCode Projects/mon_API/Tests">
 <suite id="s1-s1" name="Api" source="/home/dmd-pc-testeur/VSCode Projects/mon_API/Tests/api.robot">
-<test id="s1-s1-t1" name="Inscrire un utilisateur dans la BD" line="6">
+<test id="s1-s1-t1" name="Inscrire un utilisateur dans la BD" line="7">
 <kw name="Vérifier l'existance de l'utilisateur dans la base de données" library="singupBack">
 <kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
 <arg>pymysql</arg>
 <arg>database='demo', user='root', password='', host='localhost'</arg>
 <doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
 connect to the database using the map string `db_custom_param_string`.</doc>
-<msg timestamp="20220913 12:29:45.858" level="INFO">Executing : Connect To Database Using Custom Params : pymysql.connect(db_api_2.connect(database='demo', user='root', password='', host='localhost')) </msg>
-<status status="PASS" starttime="20220913 12:29:45.857" endtime="20220913 12:29:45.858"/>
+<msg timestamp="20220921 09:56:42.548" level="INFO">Executing : Connect To Database Using Custom Params : pymysql.connect(db_api_2.connect(database='demo', user='root', password='', host='localhost')) </msg>
+<status status="PASS" starttime="20220921 09:56:42.548" endtime="20220921 09:56:42.549"/>
 </kw>
 <kw name="Row Count Is 0" library="DatabaseLibrary">
-<arg>SELECT `id` FROM `users` WHERE `username` = ${USERNAME} AND `password` = md5(${PASSWORD})</arg>
+<arg>SELECT `id` FROM `users` WHERE `username` = '${USERNAME}' AND `password` = md5(${PASSWORD})</arg>
 <doc>Check if any rows are returned from the submitted `selectStatement`. If there are, then this will throw an
 AssertionError. Set optional input `sansTran` to True to run command without an explicit transaction commit or
 rollback.</doc>
-<msg timestamp="20220913 12:29:45.859" level="INFO">Executing : Row Count Is 0  |  SELECT `id` FROM `users` WHERE `username` = 'Caro' AND `password` = md5('test') </msg>
-<msg timestamp="20220913 12:29:45.859" level="INFO">Executing : Row Count  |  SELECT `id` FROM `users` WHERE `username` = 'Caro' AND `password` = md5('test') </msg>
-<status status="PASS" starttime="20220913 12:29:45.859" endtime="20220913 12:29:45.859"/>
+<msg timestamp="20220921 09:56:42.550" level="INFO">Executing : Row Count Is 0  |  SELECT `id` FROM `users` WHERE `username` = 'Caro' AND `password` = md5('hod') </msg>
+<msg timestamp="20220921 09:56:42.550" level="INFO">Executing : Row Count  |  SELECT `id` FROM `users` WHERE `username` = 'Caro' AND `password` = md5('hod') </msg>
+<status status="PASS" starttime="20220921 09:56:42.549" endtime="20220921 09:56:42.550"/>
 </kw>
-<status status="PASS" starttime="20220913 12:29:45.857" endtime="20220913 12:29:45.859"/>
+<status status="PASS" starttime="20220921 09:56:42.548" endtime="20220921 09:56:42.550"/>
 </kw>
 <kw name="Inscription utilisateur par une requête Http POST" library="singupBack">
+<tag>POST</tag>
 <kw name="Create Session" library="RequestsLibrary">
 <arg>session1</arg>
 <arg>${WEBSITE_LINK}</arg>
 <doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20220913 12:29:45.860" level="INFO">Creating Session using : alias=session1, url=http://localhost/demo/api/user/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20220913 12:29:45.860" endtime="20220913 12:29:45.860"/>
+<msg timestamp="20220921 09:56:42.551" level="INFO">Creating Session using : alias=session1, url=http://localhost/demo/api/user/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220921 09:56:42.551" endtime="20220921 09:56:42.551"/>
 </kw>
 <kw name="Create Dictionary" library="BuiltIn">
-<var>${data}</var>
-<arg>username=${USERNAME1}</arg>
+<var>${body}</var>
+<arg>username=${USERNAME}</arg>
 <arg>password=${PASSWORD}</arg>
 <doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<msg timestamp="20220913 12:29:45.860" level="INFO">${data} = {'username': "'Rosine'", 'password': "'test'"}</msg>
-<status status="PASS" starttime="20220913 12:29:45.860" endtime="20220913 12:29:45.860"/>
+<msg timestamp="20220921 09:56:42.552" level="INFO">${body} = {'username': 'Caro', 'password': "'hod'"}</msg>
+<status status="PASS" starttime="20220921 09:56:42.551" endtime="20220921 09:56:42.552"/>
 </kw>
 <kw name="Create Dictionary" library="BuiltIn">
-<var>${headers}</var>
-<arg>content=Type=application/x-www-form-unlencoded</arg>
+<var>${header}</var>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
 <doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<msg timestamp="20220913 12:29:45.860" level="INFO">${headers} = {'content': 'Type=application/x-www-form-unlencoded'}</msg>
-<status status="PASS" starttime="20220913 12:29:45.860" endtime="20220913 12:29:45.860"/>
+<msg timestamp="20220921 09:56:42.552" level="INFO">${header} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<status status="PASS" starttime="20220921 09:56:42.552" endtime="20220921 09:56:42.552"/>
 </kw>
 <kw name="POST On Session" library="RequestsLibrary">
 <var>${response}</var>
 <arg>session1</arg>
 <arg>signup.php</arg>
-<arg>data=${data}</arg>
-<arg>headers=${headers}</arg>
+<arg>data=${body}</arg>
+<arg>headers=${header}</arg>
 <doc>Sends a POST request on a previously created HTTP Session.</doc>
-<msg timestamp="20220913 12:29:45.864" level="INFO">POST Request : url=http://localhost/demo/api/user/signup.php 
+<msg timestamp="20220921 09:56:42.555" level="INFO">POST Request : url=http://localhost/demo/api/user/signup.php 
  path_url=/demo/api/user/signup.php 
- headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'content': 'Type=application/x-www-form-unlencoded', 'Content-Length': '41', 'Content-Type': 'application/x-www-form-urlencoded'} 
- body=username=%27Rosine%27&amp;password=%27test%27 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '32'} 
+ body=username=Caro&amp;password=%27hod%27 
  </msg>
-<msg timestamp="20220913 12:29:45.864" level="INFO">POST Response : url=http://localhost/demo/api/user/signup.php 
- status=500, reason=Internal Server Error 
- headers={'Date': 'Tue, 13 Sep 2022 11:29:45 GMT', 'Server': 'Apache/2.4.53 (Unix) OpenSSL/1.1.1o PHP/8.1.6 mod_perl/2.0.12 Perl/v5.34.1', 'X-Powered-By': 'PHP/8.1.6', 'Content-Length': '0', 'Connection': 'close', 'Content-Type': 'text/html; charset=UTF-8'} 
- body=None 
+<msg timestamp="20220921 09:56:42.555" level="INFO">POST Response : url=http://localhost/demo/api/user/signup.php 
+ status=200, reason=OK 
+ headers={'Date': 'Wed, 21 Sep 2022 08:56:42 GMT', 'Server': 'Apache/2.4.53 (Unix) OpenSSL/1.1.1o PHP/8.1.6 mod_perl/2.0.12 Perl/v5.34.1', 'X-Powered-By': 'PHP/8.1.6', 'Content-Length': '53', 'Keep-Alive': 'timeout=5, max=100', 'Connection': 'Keep-Alive', 'Content-Type': 'text/html; charset=UTF-8'} 
+ body={"status":false,"message":"Username already exists!"} 
  </msg>
-<msg timestamp="20220913 12:29:45.864" level="FAIL">HTTPError: 500 Server Error: Internal Server Error for url: http://localhost/demo/api/user/signup.php</msg>
-<status status="FAIL" starttime="20220913 12:29:45.860" endtime="20220913 12:29:45.864"/>
+<msg timestamp="20220921 09:56:42.555" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220921 09:56:42.552" endtime="20220921 09:56:42.555"/>
 </kw>
 <kw name="Set Variable" library="BuiltIn">
 <var>${json}</var>
 <arg>${response.json()}</arg>
 <doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="NOT RUN" starttime="20220913 12:29:45.865" endtime="20220913 12:29:45.865"/>
+<msg timestamp="20220921 09:56:42.556" level="INFO">${json} = {'status': False, 'message': 'Username already exists!'}</msg>
+<status status="PASS" starttime="20220921 09:56:42.556" endtime="20220921 09:56:42.556"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220921 09:56:42.556" level="INFO">&lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220921 09:56:42.556" endtime="20220921 09:56:42.556"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${json}</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20220913 12:29:45.865" endtime="20220913 12:29:45.865"/>
+<msg timestamp="20220921 09:56:42.556" level="INFO">{'status': False, 'message': 'Username already exists!'}</msg>
+<status status="PASS" starttime="20220921 09:56:42.556" endtime="20220921 09:56:42.557"/>
 </kw>
 <kw name="Should Be Equal As Strings" library="BuiltIn">
-<arg>${json.status}</arg>
+<arg>${response.status_code}</arg>
 <arg>200</arg>
 <doc>Fails if objects are unequal after converting them to strings.</doc>
-<status status="NOT RUN" starttime="20220913 12:29:45.865" endtime="20220913 12:29:45.865"/>
+<msg timestamp="20220921 09:56:42.557" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220921 09:56:42.557" endtime="20220921 09:56:42.557"/>
 </kw>
-<status status="FAIL" starttime="20220913 12:29:45.859" endtime="20220913 12:29:45.865"/>
+<status status="PASS" starttime="20220921 09:56:42.550" endtime="20220921 09:56:42.557"/>
 </kw>
 <kw name="Vérifier que l'utilisateur est ajoute dans la BD" library="singupBack">
-<status status="NOT RUN" starttime="20220913 12:29:45.866" endtime="20220913 12:29:45.866"/>
+<kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
+<arg>pymysql</arg>
+<arg>database='demo', user='root', password='', host='localhost'</arg>
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_custom_param_string`.</doc>
+<msg timestamp="20220921 09:56:42.557" level="INFO">Executing : Connect To Database Using Custom Params : pymysql.connect(db_api_2.connect(database='demo', user='root', password='', host='localhost')) </msg>
+<status status="PASS" starttime="20220921 09:56:42.557" endtime="20220921 09:56:42.558"/>
+</kw>
+<kw name="Row Count Is Equal To X" library="DatabaseLibrary">
+<arg>SELECT * FROM `users` WHERE `username` = '${USERNAME}'</arg>
+<arg>1</arg>
+<doc>Check if the number of rows returned from `selectStatement` is equal to the value submitted. If not, then this
+will throw an AssertionError. Set optional input `sansTran` to True to run command without an explicit
+transaction commit or rollback.</doc>
+<msg timestamp="20220921 09:56:42.558" level="INFO">Executing : Row Count Is Equal To X  |  SELECT * FROM `users` WHERE `username` = 'Caro'  |  1 </msg>
+<msg timestamp="20220921 09:56:42.558" level="INFO">Executing : Row Count  |  SELECT * FROM `users` WHERE `username` = 'Caro' </msg>
+<status status="PASS" starttime="20220921 09:56:42.558" endtime="20220921 09:56:42.559"/>
+</kw>
+<status status="PASS" starttime="20220921 09:56:42.557" endtime="20220921 09:56:42.559"/>
+</kw>
+<kw name="Inscription meme utilisateur par une requête Http POST" library="singupBack">
+<tag>POST New</tag>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>session2</arg>
+<arg>${WEBSITE_LINK}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220921 09:56:42.560" level="INFO">Creating Session using : alias=session2, url=http://localhost/demo/api/user/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220921 09:56:42.559" endtime="20220921 09:56:42.560"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${body}</var>
+<arg>username=${USERNAME}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220921 09:56:42.560" level="INFO">${body} = {'username': 'Caro', 'password': "'hod'"}</msg>
+<status status="PASS" starttime="20220921 09:56:42.560" endtime="20220921 09:56:42.560"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${header}</var>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220921 09:56:42.560" level="INFO">${header} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<status status="PASS" starttime="20220921 09:56:42.560" endtime="20220921 09:56:42.560"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>session2</arg>
+<arg>signup.php</arg>
+<arg>data=${body}</arg>
+<arg>headers=${header}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220921 09:56:42.564" level="INFO">POST Request : url=http://localhost/demo/api/user/signup.php 
+ path_url=/demo/api/user/signup.php 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '32'} 
+ body=username=Caro&amp;password=%27hod%27 
+ </msg>
+<msg timestamp="20220921 09:56:42.564" level="INFO">POST Response : url=http://localhost/demo/api/user/signup.php 
+ status=200, reason=OK 
+ headers={'Date': 'Wed, 21 Sep 2022 08:56:42 GMT', 'Server': 'Apache/2.4.53 (Unix) OpenSSL/1.1.1o PHP/8.1.6 mod_perl/2.0.12 Perl/v5.34.1', 'X-Powered-By': 'PHP/8.1.6', 'Content-Length': '53', 'Keep-Alive': 'timeout=5, max=100', 'Connection': 'Keep-Alive', 'Content-Type': 'text/html; charset=UTF-8'} 
+ body={"status":false,"message":"Username already exists!"} 
+ </msg>
+<msg timestamp="20220921 09:56:42.564" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220921 09:56:42.560" endtime="20220921 09:56:42.564"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220921 09:56:42.565" level="INFO">${json} = {'status': False, 'message': 'Username already exists!'}</msg>
+<status status="PASS" starttime="20220921 09:56:42.564" endtime="20220921 09:56:42.565"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220921 09:56:42.565" level="INFO">&lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220921 09:56:42.565" endtime="20220921 09:56:42.565"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220921 09:56:42.566" level="INFO">{'status': False, 'message': 'Username already exists!'}</msg>
+<status status="PASS" starttime="20220921 09:56:42.565" endtime="20220921 09:56:42.566"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20220921 09:56:42.566" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220921 09:56:42.566" endtime="20220921 09:56:42.566"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${json['message']}</arg>
+<arg>Username already exists!</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20220921 09:56:42.566" endtime="20220921 09:56:42.566"/>
+</kw>
+<status status="PASS" starttime="20220921 09:56:42.559" endtime="20220921 09:56:42.566"/>
+</kw>
+<kw name="Verifier que l'utilisateur n'est pas dupliquer dans la BD" library="singupBack">
+<kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
+<arg>pymysql</arg>
+<arg>database='demo', user='root', password='', host='localhost'</arg>
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_custom_param_string`.</doc>
+<msg timestamp="20220921 09:56:42.567" level="INFO">Executing : Connect To Database Using Custom Params : pymysql.connect(db_api_2.connect(database='demo', user='root', password='', host='localhost')) </msg>
+<status status="PASS" starttime="20220921 09:56:42.567" endtime="20220921 09:56:42.567"/>
+</kw>
+<kw name="Row Count Is Equal To X" library="DatabaseLibrary">
+<arg>SELECT * FROM `users` WHERE `username` = '${USERNAME}'</arg>
+<arg>1</arg>
+<doc>Check if the number of rows returned from `selectStatement` is equal to the value submitted. If not, then this
+will throw an AssertionError. Set optional input `sansTran` to True to run command without an explicit
+transaction commit or rollback.</doc>
+<msg timestamp="20220921 09:56:42.567" level="INFO">Executing : Row Count Is Equal To X  |  SELECT * FROM `users` WHERE `username` = 'Caro'  |  1 </msg>
+<msg timestamp="20220921 09:56:42.568" level="INFO">Executing : Row Count  |  SELECT * FROM `users` WHERE `username` = 'Caro' </msg>
+<status status="PASS" starttime="20220921 09:56:42.567" endtime="20220921 09:56:42.568"/>
+</kw>
+<status status="PASS" starttime="20220921 09:56:42.567" endtime="20220921 09:56:42.568"/>
 </kw>
 <tag>First</tag>
-<status status="FAIL" starttime="20220913 12:29:45.857" endtime="20220913 12:29:45.866">HTTPError: 500 Server Error: Internal Server Error for url: http://localhost/demo/api/user/signup.php</status>
+<status status="PASS" starttime="20220921 09:56:42.548" endtime="20220921 09:56:42.568"/>
 </test>
-<status status="FAIL" starttime="20220913 12:29:45.758" endtime="20220913 12:29:45.866"/>
+<test id="s1-s1-t2" name="Authentifier utilisateur" line="15">
+<kw name="Verifier que l'utilisateur existe" library="loginBack">
+<kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
+<arg>pymysql</arg>
+<arg>database='demo', user='root', password='', host='localhost'</arg>
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_custom_param_string`.</doc>
+<msg timestamp="20220921 09:56:42.569" level="INFO">Executing : Connect To Database Using Custom Params : pymysql.connect(db_api_2.connect(database='demo', user='root', password='', host='localhost')) </msg>
+<status status="PASS" starttime="20220921 09:56:42.569" endtime="20220921 09:56:42.570"/>
+</kw>
+<kw name="Row Count Is Equal To X" library="DatabaseLibrary">
+<arg>SELECT `id` FROM `users` WHERE `username` = '${USERNAME}'</arg>
+<arg>1</arg>
+<doc>Check if the number of rows returned from `selectStatement` is equal to the value submitted. If not, then this
+will throw an AssertionError. Set optional input `sansTran` to True to run command without an explicit
+transaction commit or rollback.</doc>
+<msg timestamp="20220921 09:56:42.570" level="INFO">Executing : Row Count Is Equal To X  |  SELECT `id` FROM `users` WHERE `username` = 'Caro'  |  1 </msg>
+<msg timestamp="20220921 09:56:42.570" level="INFO">Executing : Row Count  |  SELECT `id` FROM `users` WHERE `username` = 'Caro' </msg>
+<status status="PASS" starttime="20220921 09:56:42.570" endtime="20220921 09:56:42.570"/>
+</kw>
+<status status="PASS" starttime="20220921 09:56:42.569" endtime="20220921 09:56:42.571"/>
+</kw>
+<kw name="Authentification de l'utilisateur" library="loginBack">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>session3</arg>
+<arg>${WEBSITE_LINK}</arg>
+<arg>disable_warnings=1</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220921 09:56:42.571" level="INFO">Creating Session using : alias=session3, url=http://localhost/demo/api/user/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220921 09:56:42.571" endtime="20220921 09:56:42.571"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${endpoint}</var>
+<arg>username=${USERNAME}&amp;password=${PASSWORD}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220921 09:56:42.571" level="INFO">${endpoint} = username=Caro&amp;password='hod'</msg>
+<status status="PASS" starttime="20220921 09:56:42.571" endtime="20220921 09:56:42.571"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>session3</arg>
+<arg>login.php?${endpoint}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20220921 09:56:42.573" level="INFO">GET Request : url=http://localhost/demo/api/user/login.php?username=Caro&amp;password='hod' 
+ path_url=/demo/api/user/login.php?username=Caro&amp;password='hod' 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20220921 09:56:42.573" level="INFO">GET Response : url=http://localhost/demo/api/user/login.php?username=Caro&amp;password='hod' 
+ status=200, reason=OK 
+ headers={'Date': 'Wed, 21 Sep 2022 08:56:42 GMT', 'Server': 'Apache/2.4.53 (Unix) OpenSSL/1.1.1o PHP/8.1.6 mod_perl/2.0.12 Perl/v5.34.1', 'X-Powered-By': 'PHP/8.1.6', 'Content-Length': '73', 'Keep-Alive': 'timeout=5, max=100', 'Connection': 'Keep-Alive', 'Content-Type': 'text/html; charset=UTF-8'} 
+ body={"status":true,"message":"Successfully Login!","id":93,"username":"Caro"} 
+ </msg>
+<msg timestamp="20220921 09:56:42.573" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220921 09:56:42.571" endtime="20220921 09:56:42.573"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220921 09:56:42.574" level="INFO">${json} = {'status': True, 'message': 'Successfully Login!', 'id': 93, 'username': 'Caro'}</msg>
+<status status="PASS" starttime="20220921 09:56:42.573" endtime="20220921 09:56:42.574"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220921 09:56:42.574" level="INFO">{'status': True, 'message': 'Successfully Login!', 'id': 93, 'username': 'Caro'}</msg>
+<status status="PASS" starttime="20220921 09:56:42.574" endtime="20220921 09:56:42.574"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20220921 09:56:42.574" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220921 09:56:42.574" endtime="20220921 09:56:42.574"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${json['message']}</arg>
+<arg>Successfully Login!</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20220921 09:56:42.574" endtime="20220921 09:56:42.575"/>
+</kw>
+<status status="PASS" starttime="20220921 09:56:42.571" endtime="20220921 09:56:42.575"/>
+</kw>
+<kw name="Supprimer un utilisateur" library="loginBack">
+<kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
+<arg>pymysql</arg>
+<arg>database='demo', user='root', password='', host='localhost'</arg>
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_custom_param_string`.</doc>
+<msg timestamp="20220921 09:56:42.575" level="INFO">Executing : Connect To Database Using Custom Params : pymysql.connect(db_api_2.connect(database='demo', user='root', password='', host='localhost')) </msg>
+<status status="PASS" starttime="20220921 09:56:42.575" endtime="20220921 09:56:42.575"/>
+</kw>
+<kw name="Execute Sql String" library="DatabaseLibrary">
+<arg>DELETE FROM `users` WHERE `username`= 'Arafata' and `password`= md5('Arafata')</arg>
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20220921 09:56:42.576" level="INFO">Executing : Execute SQL String  |  DELETE FROM `users` WHERE `username`= 'Arafata' and `password`= md5('Arafata') </msg>
+<status status="PASS" starttime="20220921 09:56:42.575" endtime="20220921 09:56:42.592"/>
+</kw>
+<kw name="Disconnect From Database" library="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<msg timestamp="20220921 09:56:42.592" level="INFO">Executing : Disconnect From Database</msg>
+<status status="PASS" starttime="20220921 09:56:42.592" endtime="20220921 09:56:42.592"/>
+</kw>
+<status status="PASS" starttime="20220921 09:56:42.575" endtime="20220921 09:56:42.593"/>
+</kw>
+<kw name="Authentifier de l'utilisateur" library="loginBack">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>session4</arg>
+<arg>${WEBSITE_LINK}</arg>
+<arg>disable_warnings=1</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220921 09:56:42.593" level="INFO">Creating Session using : alias=session4, url=http://localhost/demo/api/user/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220921 09:56:42.593" endtime="20220921 09:56:42.593"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${endpoint}</var>
+<arg>username=${USERNAME}&amp;password=${PASSWORD1}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220921 09:56:42.594" level="INFO">${endpoint} = username=Caro&amp;password='hod22'</msg>
+<status status="PASS" starttime="20220921 09:56:42.594" endtime="20220921 09:56:42.594"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>session4</arg>
+<arg>login.php?${endpoint}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20220921 09:56:42.598" level="INFO">GET Request : url=http://localhost/demo/api/user/login.php?username=Caro&amp;password='hod22' 
+ path_url=/demo/api/user/login.php?username=Caro&amp;password='hod22' 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20220921 09:56:42.598" level="INFO">GET Response : url=http://localhost/demo/api/user/login.php?username=Caro&amp;password='hod22' 
+ status=200, reason=OK 
+ headers={'Date': 'Wed, 21 Sep 2022 08:56:42 GMT', 'Server': 'Apache/2.4.53 (Unix) OpenSSL/1.1.1o PHP/8.1.6 mod_perl/2.0.12 Perl/v5.34.1', 'X-Powered-By': 'PHP/8.1.6', 'Content-Length': '58', 'Keep-Alive': 'timeout=5, max=100', 'Connection': 'Keep-Alive', 'Content-Type': 'text/html; charset=UTF-8'} 
+ body={"status":false,"message":"Invalid Username or Password!"} 
+ </msg>
+<msg timestamp="20220921 09:56:42.598" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220921 09:56:42.594" endtime="20220921 09:56:42.598"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220921 09:56:42.599" level="INFO">${json} = {'status': False, 'message': 'Invalid Username or Password!'}</msg>
+<status status="PASS" starttime="20220921 09:56:42.598" endtime="20220921 09:56:42.599"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220921 09:56:42.599" level="INFO">{'status': False, 'message': 'Invalid Username or Password!'}</msg>
+<status status="PASS" starttime="20220921 09:56:42.599" endtime="20220921 09:56:42.599"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20220921 09:56:42.599" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220921 09:56:42.599" endtime="20220921 09:56:42.599"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${json['message']}</arg>
+<arg>Invalid Username or Password!</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20220921 09:56:42.600" endtime="20220921 09:56:42.600"/>
+</kw>
+<status status="PASS" starttime="20220921 09:56:42.593" endtime="20220921 09:56:42.600"/>
+</kw>
+<tag>Second</tag>
+<status status="PASS" starttime="20220921 09:56:42.569" endtime="20220921 09:56:42.600"/>
+</test>
+<status status="PASS" starttime="20220921 09:56:42.410" endtime="20220921 09:56:42.600"/>
 </suite>
-<status status="FAIL" starttime="20220913 12:29:45.749" endtime="20220913 12:29:45.867"/>
+<status status="PASS" starttime="20220921 09:56:42.401" endtime="20220921 09:56:42.601"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tests</stat>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="0" fail="1" skip="0">First</stat>
+<stat pass="1" fail="0" skip="0">First</stat>
+<stat pass="1" fail="0" skip="0">Second</stat>
 </tag>
 <suite>
-<stat pass="0" fail="1" skip="0" id="s1" name="Tests">Tests</stat>
-<stat pass="0" fail="1" skip="0" id="s1-s1" name="Api">Tests.Api</stat>
+<stat pass="2" fail="0" skip="0" id="s1" name="Tests">Tests</stat>
+<stat pass="2" fail="0" skip="0" id="s1-s1" name="Api">Tests.Api</stat>
 </suite>
 </statistics>
 <errors>
